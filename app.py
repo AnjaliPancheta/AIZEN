@@ -47,14 +47,14 @@ app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = MYSQL_PASSWORD
 app.config['MYSQL_DB'] = 'aizen2'
-
+app.config['DB_PORT'] = 3306
 # Establishing MySQL connection
 mysql = mysql.connector.connect(
     host=app.config['MYSQL_HOST'],
     user=app.config['MYSQL_USER'],
     password=app.config['MYSQL_PASSWORD'],
     database=app.config['MYSQL_DB'],
-    port=os.environ.get('DB_PORT', 3306),
+    port=app.config['DB_PORT'],
 )
 
 # Setup email

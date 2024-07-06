@@ -54,6 +54,7 @@ mysql = mysql.connector.connect(
     user=app.config['MYSQL_USER'],
     password=app.config['MYSQL_PASSWORD'],
     database=app.config['MYSQL_DB']
+    port=os.environ.get('DB_PORT', 3306),
 )
 
 # Setup email

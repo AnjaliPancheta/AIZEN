@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
-import mysql.connector
 import requests
 import io
 import os
@@ -19,7 +18,6 @@ from email.mime.multipart import MIMEMultipart
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
 from wtforms.validators import DataRequired, Email, Length
-import smtplib
 
 import os
 import random
@@ -27,6 +25,8 @@ from email_validator import validate_email, EmailNotValidError
 from flask_wtf import CSRFProtect
 from flask_wtf import CSRFProtect, FlaskForm
 from wtforms import TextAreaField, IntegerField, PasswordField, StringField, IntegerField, SelectField, SubmitField
+
+import google.generativeai as genai
 
 app = Flask(__name__)
 
@@ -107,13 +107,13 @@ def signup():
     
     return render_template('signup.html', form=form)
 
-smtp_password = os.environ.get('SMTP_PASSWORD')
+smtp_pass = os.environ.get('SMTP_PASSWORD')
 def send_otp(email, otp):
     # Gmail SMTP server setup
     smtp_server = 'smtp.gmail.com'
     smtp_port = 587
     smtp_username = 'aizen.site@gmail.com'
-    smtp_password = smtp_password  
+    smtp_password = smtp_pass  
 
     message = MIMEMultipart()
     message['From'] = smtp_username
@@ -170,11 +170,13 @@ def login():
             flash('Invalid email or password. Please try again.')
     return render_template('login.html', form=form)
 
+CLIENT_ID = os.environ.get('CLIENT_ID')
+Client_secret = os.environ.get('Client_secret')
 @app.route('/google_signin', methods=['POST'])
 def google_signin():
     try:
         token = request.json['token']
-        CLIENT_ID = 'YOUR_CLIENT_ID.apps.googleusercontent.com'
+        CLIENT_ID = CLIENT_ID
 
         idinfo = id_token.verify_oauth2_token(token, google_requests.Request(), CLIENT_ID)
 
@@ -263,8 +265,6 @@ def generate_image():
     return render_template('generate_image.html', form=form, image=image_base64)
 
 # ===================< Blog Generator >===========================
-import os
-import google.generativeai as genai
 
 API_KEY_GEN = os.getenv('GEN_API_KEY')
 # Configure Generative AI model
@@ -305,17 +305,23 @@ def generate_blog():
     return render_template('generate_blog_form.html', form=form)
 
 
+# ===================< Text Summarization >===========================
 
 csrf.init_app(app)
 
 SUMMARIZE_API_URL = "https://api-inference.huggingface.co/models/AnjaliPancheta/pegasus-finetuned-xsum"
 
 class SummarizeTextForm(FlaskForm):
-    user_text = TextAreaField('Paste or type the text you would like to summarize:', validators=[DataRequired()])
+    # user_text = TextAreaField('Paste or type the text you would like to summarize...', 
+    #                           validators=[DataRequired()])
+    user_text = TextAreaField('Enter text to summarize:', 
+                              validators=[DataRequired()],
+                              render_kw={"placeholder": "Paste or type the text here you would like to summarize..."})
 
-def query(payload2):
+
+def query2(payload):
     headers = {"Authorization": f"Bearer {api_key}"}
-    response = requests.post(SUMMARIZE_API_URL, headers=headers, json=payload2)
+    response = requests.post(SUMMARIZE_API_URL, headers=headers, json=payload)
     return response.json()
 
 @app.route('/summarize_text', methods=['GET', 'POST'])
@@ -327,8 +333,9 @@ def summarize_text():
 
         try:
             # Send text to the API for summarization
-            payload2 = {"inputs": user_text}
-            api_response = query(payload2)
+            payload = {"inputs": user_text,
+                        "wait_for_model": True}
+            api_response = query2(payload)
             
             # Extract the generated_text from the API response
             summary = api_response
@@ -366,11 +373,9 @@ def summarize_text():
     
 #     return render_template('summarize_text.html')
 
-import os
 
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 
-import keras
 
 if __name__ == '__main__':
     app.run(debug=True)

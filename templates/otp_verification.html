@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="otp-verification-container">
+    <h2>OTP Verification</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.otp.label }}
+            {{ form.otp(class_='form-control') }}
+        </div>
+        {{ form.submit(class_='btn btn-primary') }}
+    </form>
+</div>
+{% endblock %}

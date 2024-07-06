@@ -1,0 +1,39 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="homeContainer">
+    <section class="landing">
+        <div class="hero-content">
+            <h1 class="welcome">Unleash the Power of AI with AIZEN</h1><p>Experience the future of AI with powerful tools for generating stunning images, crafting engaging blogs, and summarizing text effortlessly</p>
+            <a href="#chooseBox">
+            <button class="button-85" role="button">Get Started</button></a>
+
+        </div>
+        <img src="{{ url_for('static', filename='images/robot.png') }}" alt="Robot" class="hero-image">
+    </section>
+    
+    <div  class="options-outer">
+        <div id="chooseBox" class="options">
+            <a href="{{ url_for('generate_image') }}" class="option-block">
+                <img src="{{ url_for('static', filename='images/image1.jpg') }}" alt="Text to Image">
+                <div class="pic"><span>Text-to-Image Generation</span></div>    
+            </a>
+            <a href="{{ url_for('generate_blog') }}" class="option-block">
+                <img src="{{ url_for('static', filename='images/image2.jpg') }}" alt="Blog Generation">
+                <div class="pic"><span>Blog Generation</span></div>
+                
+            </a>
+            <a href="{{ url_for('summarize_text') }}" class="option-block">
+                <img src="{{ url_for('static', filename='images/image3.jpg') }}" alt="Text Summarization">
+                <div class="pic"><span>Text Summarization</span></div>
+            </a>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+
+

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="di">
+  <div class="contactContainer">
+    <h2>Contact Us</h2>
+    <p>If you have any questions, feel free to reach out!</p>
+    <form method="POST" class="form">
+      {{ form.hidden_tag() }}
+      <div class="form-group">
+        {{ form.name.label }}
+        {{ form.name(class="form-control") }}
+      </div>
+      <div class="form-group">
+        {{ form.email.label }}
+        {{ form.email(class="form-control") }}
+      </div>
+      <div class="form-group">
+        {{ form.message.label }}
+        {{ form.message(class="form-control", rows=7 )}}
+      </div>
+      <button class="contact-button" type="submit">Submit</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

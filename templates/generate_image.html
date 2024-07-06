@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="image-container">
+    <h2>Text to Image</h2>
+    <form method="post">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            <label for="prompt">Describe the Image:</label>
+            {{ form.prompt(class="form-control", id="prompt", required=True) }}
+        </div>
+        <button type="submit">Generate Image</button>
+    </form>
+    {% if image %}
+    <div class="generated-image">
+        <h1>Generated Image:</h1>
+        <img class="generatedDisplay" src="data:image/png;base64,{{ image }}" alt="Generated Image">
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

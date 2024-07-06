@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="summarize-container">
+  <h2 class="section-title">Text Summarization</h2>
+  <form method="post" id="summarize-form">
+    {{ form.hidden_tag() }}  <!-- Ensure CSRF token is included -->
+    <div class="summarize-form-group">
+      <label for="user_text" class="form-label">{{ form.user_text.label }}</label>
+      {{ form.user_text(rows=10) }}
+    </div>
+    <button type="submit" class="btn-submit">Summarize Text</button>
+      <div class="progress"></div>
+    </div>
+  </form>
+  {% if summary %}
+  <div class="summarized-text" id="summarized-text">
+    <h3 class="sub-section-title">Summarized Text:</h3>
+    <p>{{ summary }}</p>
+  </div>
+  {% elif error %}
+  <div class="error-message">
+    <p>{{ error }}</p>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="blog-container">
+    <h2>Generated Blog</h2>
+    <div class="generated-content">
+        {{ generated_content|safe }}
+    </div>
+    <br>
+    <a href="{{ url_for('generate_blog') }}" class="blog-btn">Generate Another</a>
+</div>
+{% endblock %}

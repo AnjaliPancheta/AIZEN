@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="{{ url_for('static', filename='js/style.js') }}" defer></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <!--FONT AWESOME-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fontawesome.com/icons/linkedin?f=brands&s=solid">
+    <link rel="stylesheet" href="https://fontawesome.com/icons/x-twitter?f=brands&s=solid">
+    <!--GOOGLE FONTS-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Play&display=swap" rel="stylesheet">
+    <meta name="google-signin-client_id" content="AIzaSyCQpbFsZ9Jwuv3Kgst-07RyCc4Th-905MQ.apps.googleusercontent.com">
+    <title>AI Zen</title>
+</head>
+<body>
+    <header>
+          
+        <!-- NAVBAR -->
+        <nav class="navbar">
+            <div class="logo-container">
+                <h1 class="logo">AIZEN</h1>
+            </div>
+            <div class="menu-toggle">
+                <span class="icon">☰</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Tools</a>
+                    <div class="dropdown-content">
+                        <a href="{{ url_for('generate_image') }}">Text-to-Image</a>
+                        <a href="{{ url_for('generate_blog') }}">Blog Generation</a>
+                        <a href="{{ url_for('summarize_text') }}">Text Summarization</a>
+                    </div>
+                </li>
+                <li><a href="{{ url_for('signup') }}" class="join-btn">Join Us</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>                
+        <!-- <img src="{{ url_for('static', filename='images/logo (2).png') }}" alt="Logo" class="logo"> -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="alert alert-success" role="alert">
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
+        {% block content %}
+        {% endblock %}
+    
+    </main>
+    <footer>
+        <div class="footer">
+            <div class="row">
+            
+            <a href="https://www.linkedin.com/in/anjali-pancheta-390008229"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="https://github.com/AnjaliPancheta"><i class="fa-brands fa-github"></i></a>
+            <a href="https://mail.google.com/mail/u/1/?view=cm&fs=1&to=anjalipancheta@gmail.com&tf=1"><i class="fa-solid fa-envelope"></i></a>
+            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+            </div>
+        
+            <div class="row">
+            <ul>
+            <li><a href="{{ url_for('contact') }}">Contact us</a></li>
+            <li><a href="#">Home</a>
+                <li class="dropdown">
+                <a href="#" class="dropbtn">Tools</a>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('generate_image') }}">Text-to-Image</a>
+                    <a href="{{ url_for('generate_blog') }}">Blog Generation</a>
+                    <a href="{{ url_for('summarize_text') }}">Text Summarization</a>
+                </div>
+                </li>
+            </li>
+            <li><a href="#">About Us</a></li>
+            </ul>
+            </div>
+        
+            <div class="row">
+            AIZEN Copyright © 2024 - All rights reserved   &nbsp;&nbsp;&nbsp;&nbsp;  ||  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Designed By: Anjali Pancheta 
+            </div>
+        </div>
+        </footer>
+        <script>
+            document.querySelector('.menu-toggle').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+            // const menuToggle = document.querySelector('.menu-toggle');
+            // const navLinks = document.querySelector('.nav-links');
+    
+            // menuToggle.addEventListener('click', () => {
+            //     navLinks.classList.toggle('active');
+            //     menuToggle.classList.toggle('active');
+            // });
+
+        </script>
+        <script src="https://kit.fontawesome.com/5cb00c060d.js" crossorigin="anonymous"></script>
+</body>
+</html>
+
+

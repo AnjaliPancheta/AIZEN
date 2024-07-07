@@ -23,7 +23,7 @@ The platform integrates with MySQL for robust database management, securely stor
 
 ### Clone the Repository
 ```sh
-git clone https://github.com/yourusername/aizen.git
+git clone https://github.com/AnjaliPancheta/AIZEN.git
 ```
 
 ### Install Dependencies:
@@ -31,10 +31,14 @@ git clone https://github.com/yourusername/aizen.git
 pip install -r requirements.txt
 ```
 
-###Set Up Environment Variables: 
+### Set Up Environment Variables: 
 Configure your .env file with necessary environment variables.
 
-###Run the Application:
+### Run the Application:
 ```sh
 flask run
 ```
+
+### Contact
+For any queries or support, please contact us at aizen.site@gmail.com.
+

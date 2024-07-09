@@ -47,14 +47,14 @@ app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = MYSQL_PASSWORD
 app.config['MYSQL_DB'] = 'aizen2'
-
+app.config['DB_PORT'] = 3306
 # Establishing MySQL connection
 mysql = mysql.connector.connect(
     host=app.config['MYSQL_HOST'],
     user=app.config['MYSQL_USER'],
     password=app.config['MYSQL_PASSWORD'],
-    database=app.config['MYSQL_DB']
-    port=os.environ.get('DB_PORT', 3306),
+    database=app.config['MYSQL_DB'],
+    port=app.config['DB_PORT'],
 )
 
 # Setup email
@@ -313,8 +313,6 @@ csrf.init_app(app)
 SUMMARIZE_API_URL = "https://api-inference.huggingface.co/models/AnjaliPancheta/pegasus-finetuned-xsum"
 
 class SummarizeTextForm(FlaskForm):
-    # user_text = TextAreaField('Paste or type the text you would like to summarize...', 
-    #                           validators=[DataRequired()])
     user_text = TextAreaField('Enter text to summarize:', 
                               validators=[DataRequired()],
                               render_kw={"placeholder": "Paste or type the text here you would like to summarize..."})
@@ -335,6 +333,7 @@ def summarize_text():
         try:
             # Send text to the API for summarization
             payload = {"inputs": user_text,
+                       'truncation': 'only_first',
                         "wait_for_model": True}
             api_response = query2(payload)
             

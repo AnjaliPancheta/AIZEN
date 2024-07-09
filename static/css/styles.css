@@ -610,7 +610,7 @@ text-align: center;
     align-items: center;
 }
 
-element.style {
+.alert {
     width: 100%;
     margin: 1.5vh 0 0 1vh;
     padding: 15px;
@@ -622,7 +622,12 @@ element.style {
     transition: background 0.3s ease;
 }
 
-
+element.style {
+    position: sticky;
+    text-align: center;
+    z-index: 100;
+    top: 20vh;
+}
 
 /* -----------------< FOOTER >------------------ */
 
